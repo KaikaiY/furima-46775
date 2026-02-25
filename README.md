@@ -1,24 +1,73 @@
-# README
+# テーブル設計
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## users テーブル
 
-Things you may want to cover:
+| Column             | Type   | Options     |
+| ------------------ | ------ | ----------- |
+| email              | string | null: false |
+| encrypted_password | string | null: false |
+| nick_name          | string | null: false |
+| first_name         | string | null: false |
+| last_name          | string | null: false |
+| birthday           | date   | null: true  |
 
-* Ruby version
+### Association
+- has_many :items
+- has_many :orders
 
-* System dependencies
+### Index
+- add_index :users, :email, unique: true
 
-* Configuration
+## items テーブル
 
-* Database creation
+| Column        | Type       | Options     |
+| ------------- | ---------- | ------------|
+| item_name     | string     | null: false |
+| category_id   | integer    | null: false, ActiveHash |
+| condition_id  | integer    | null: false, ActiveHash |
+| fee_id        | integer    | null: false, ActiveHash |
+| prefecture_id | integer    | null: false, ActiveHash |
+| delivery_id   | integer    | null: false, ActiveHash |
+| price         | bigint     | null: false |
+| user          | references | null: false, foreign_key: true |
 
-* Database initialization
+### Association
+- belongs_to :user
+- has_one :order
 
-* How to run the test suite
 
-* Services (job queues, cache servers, search engines, etc.)
+## orders テーブル
 
-* Deployment instructions
+| Column       | Type       | Options     |
+| ------------ | ---------- | ----------- |
+| user         | references | null: false, foreign_key: true|
+| item         | references | null: false, foreign_key: true|
 
-* ...
+
+### Association
+- belongs_to :user
+- belongs_to :item
+- has_one :address
+
+### Index
+- add_index :orders, :item_id, unique: true
+
+
+## addresses テーブル
+
+| Column        | Type       | Options     |
+| ------------- | ---------- | ------------|
+| post_code     | string     | null: false |
+| prefecture_id | integer    | null: false, ActiveHash |
+| city          | string     | null: false |
+| address_line1 | string     | null: false |
+| address_line2 | string     | null: true  |
+| phone_number  | string     | null: true  |
+| order         | references | null: false, foreign_key: true|
+
+
+### Association
+- belongs_to :order
+
+### Index
+- add_index :addresses, :order_id, unique: true
