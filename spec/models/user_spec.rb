@@ -34,22 +34,22 @@ RSpec.describe User, type: :model do
         expect(@user.errors.full_messages).to include("Password confirmation doesn't match Password")
       end
       it '名字(全角)が空では登録できない' do
-        @user.first_name_kanji = ''
+        @user.first_name_zenkaku = ''
         @user.valid?
         expect(@user.errors.full_messages).to include("First name kanji can't be blank")
       end
       it '名前(全角)が空では登録できない' do
-        @user.last_name_kanji = ''
+        @user.last_name_zenkaku = ''
         @user.valid?
         expect(@user.errors.full_messages).to include("Last name kanji can't be blank")
       end
       it '名字(カナ)が空では登録できない' do
-        @user.first_name_kana = ''
+        @user.first_name_katakana = ''
         @user.valid?
         expect(@user.errors.full_messages).to include("First name kana can't be blank")
       end
       it '名前(カナ)が空では登録できない' do
-        @user.last_name_kana = ''
+        @user.last_name_katakana = ''
         @user.valid?
         expect(@user.errors.full_messages).to include("Last name kana can't be blank")
       end
@@ -77,39 +77,45 @@ RSpec.describe User, type: :model do
         @user.valid?
         expect(@user.errors.full_messages).to include('Password is too short (minimum is 6 characters)')
       end
-      it 'パスワードは、半角英数字混合での入力が必須' do
+      it 'パスワードは、半角英字のみでは登録できない' do
         @user.password = 'password'
         @user.password_confirmation = @user.password
         @user.valid?
         expect(@user.errors.full_messages).to include('Password には英字と数字の両方を含めて設定してください')
       end
+      it 'パスワードは、半角数字のみでは登録できない' do
+        @user.password = '123456'
+        @user.password_confirmation = @user.password
+        @user.valid?
+        expect(@user.errors.full_messages).to include('Password には英字と数字の両方を含めて設定してください')
+      end
       it '名字(全角)が半角では登録できない' do
-        @user.first_name_kanji = Faker::Name.first_name
+        @user.first_name_zenkaku = Faker::Name.first_name
         @user.valid?
         expect(@user.errors.full_messages).to include('First name kanji 全角文字を使用してください')
       end
       it '名前(全角)が半角では登録できない' do
-        @user.last_name_kanji = Faker::Name.last_name
+        @user.last_name_zenkaku = Faker::Name.last_name
         @user.valid?
         expect(@user.errors.full_messages).to include('Last name kanji 全角文字を使用してください')
       end
       it '名字(カナ)が半角では登録できない' do
-        @user.first_name_kana = Faker::Name.first_name
+        @user.first_name_katakana = Faker::Name.first_name
         @user.valid?
         expect(@user.errors.full_messages).to include('First name kana カタカナを使用してください')
       end
       it '名前(カナ)が半角では登録できない' do
-        @user.last_name_kana = Faker::Name.last_name
+        @user.last_name_katakana = Faker::Name.last_name
         @user.valid?
         expect(@user.errors.full_messages).to include('Last name kana カタカナを使用してください')
       end
       it '名字(カナ)が全角漢字では登録できない' do
-        @user.first_name_kana = Gimei.name.first.kanji
+        @user.first_name_katakana = Gimei.name.first.kanji
         @user.valid?
         expect(@user.errors.full_messages).to include('First name kana カタカナを使用してください')
       end
       it '名前(カナ)が全角漢字では登録できない' do
-        @user.last_name_kana = Gimei.name.last.kanji
+        @user.last_name_katakana = Gimei.name.last.kanji
         @user.valid?
         expect(@user.errors.full_messages).to include('Last name kana カタカナを使用してください')
       end
