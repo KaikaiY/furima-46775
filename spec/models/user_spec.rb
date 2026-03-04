@@ -36,22 +36,22 @@ RSpec.describe User, type: :model do
       it '名字(全角)が空では登録できない' do
         @user.first_name_zenkaku = ''
         @user.valid?
-        expect(@user.errors.full_messages).to include("First name kanji can't be blank")
+        expect(@user.errors.full_messages).to include("First name zenkaku can't be blank")
       end
       it '名前(全角)が空では登録できない' do
         @user.last_name_zenkaku = ''
         @user.valid?
-        expect(@user.errors.full_messages).to include("Last name kanji can't be blank")
+        expect(@user.errors.full_messages).to include("Last name zenkaku can't be blank")
       end
       it '名字(カナ)が空では登録できない' do
         @user.first_name_katakana = ''
         @user.valid?
-        expect(@user.errors.full_messages).to include("First name kana can't be blank")
+        expect(@user.errors.full_messages).to include("First name katakana can't be blank")
       end
       it '名前(カナ)が空では登録できない' do
         @user.last_name_katakana = ''
         @user.valid?
-        expect(@user.errors.full_messages).to include("Last name kana can't be blank")
+        expect(@user.errors.full_messages).to include("Last name katakana can't be blank")
       end
       it '生年月日が空では登録できない' do
         @user.birthday = ''
@@ -92,32 +92,32 @@ RSpec.describe User, type: :model do
       it '名字(全角)が半角では登録できない' do
         @user.first_name_zenkaku = Faker::Name.first_name
         @user.valid?
-        expect(@user.errors.full_messages).to include('First name kanji 全角文字を使用してください')
+        expect(@user.errors.full_messages).to include('First name zenkaku 全角文字を使用してください')
       end
       it '名前(全角)が半角では登録できない' do
         @user.last_name_zenkaku = Faker::Name.last_name
         @user.valid?
-        expect(@user.errors.full_messages).to include('Last name kanji 全角文字を使用してください')
+        expect(@user.errors.full_messages).to include('Last name zenkaku 全角文字を使用してください')
       end
       it '名字(カナ)が半角では登録できない' do
         @user.first_name_katakana = Faker::Name.first_name
         @user.valid?
-        expect(@user.errors.full_messages).to include('First name kana カタカナを使用してください')
+        expect(@user.errors.full_messages).to include('First name katakana カタカナを使用してください')
       end
       it '名前(カナ)が半角では登録できない' do
         @user.last_name_katakana = Faker::Name.last_name
         @user.valid?
-        expect(@user.errors.full_messages).to include('Last name kana カタカナを使用してください')
+        expect(@user.errors.full_messages).to include('Last name katakana カタカナを使用してください')
       end
       it '名字(カナ)が全角漢字では登録できない' do
         @user.first_name_katakana = Gimei.name.first.kanji
         @user.valid?
-        expect(@user.errors.full_messages).to include('First name kana カタカナを使用してください')
+        expect(@user.errors.full_messages).to include('First name katakana カタカナを使用してください')
       end
       it '名前(カナ)が全角漢字では登録できない' do
         @user.last_name_katakana = Gimei.name.last.kanji
         @user.valid?
-        expect(@user.errors.full_messages).to include('Last name kana カタカナを使用してください')
+        expect(@user.errors.full_messages).to include('Last name katakana カタカナを使用してください')
       end
     end
   end
