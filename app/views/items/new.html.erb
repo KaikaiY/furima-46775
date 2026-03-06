@@ -7,11 +7,8 @@
     <h2 class="items-sell-title">商品の情報を入力</h2>
     <%= form_with model: @item,local: true do |f| %>
 
-    <%# インスタンスを渡して、エラー発生時にメッセージが表示されるようにしましょう。%>
     <%= render 'shared/error_messages', model: f.object %>
-    <%# //インスタンスを渡して、エラー発生時にメッセージが表示されるようにしましょう。%>
 
-    <%# 商品画像 %>
     <div class="img-upload">
       <div class="weight-bold-text">
         商品画像
@@ -24,8 +21,7 @@
         <%= f.file_field :image, id:"item-image" %>
       </div>
     </div>
-    <%# /商品画像 %>
-    <%# 商品名と商品説明 %>
+
     <div class="new-items">
       <div class="weight-bold-text">
         商品名
@@ -80,9 +76,7 @@
         <%= f.collection_select(:delivery_id, Delivery.all, :id, :name, {}, {class:"select-box", id:"item-scheduled-delivery"}) %>
       </div>
     </div>
-    <%# /配送について %>
 
-    <%# 販売価格 %>
     <div class="sell-price">
       <div class="weight-bold-text question-text">
         <span>販売価格<br>(¥300〜9,999,999)</span>
@@ -111,9 +105,7 @@
         </div>
       </div>
     </div>
-    <%# /販売価格 %>
 
-    <%# 注意書き %>
     <div class="caution">
       <p class="sentence">
         <a href="#">禁止されている出品、</a>
@@ -131,13 +123,10 @@
         に同意したことになります。
       </p>
     </div>
-    <%# /注意書き %>
-    <%# 下部ボタン %>
     <div class="sell-btn-contents">
       <%= f.submit "出品する" ,class:"sell-btn" %>
       <%=link_to 'もどる', root_path, class:"back-btn" %>
     </div>
-    <%# /下部ボタン %>
   </div>
   <% end %>
 
