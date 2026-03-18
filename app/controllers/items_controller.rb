@@ -54,7 +54,7 @@ class ItemsController < ApplicationController
   end
 
   def restricted_editing
-    return if current_user == @item.user
+    return unless current_user != @item.user || @item.order.present?
 
     redirect_to root_path, notice: '権限がありません'
   end
