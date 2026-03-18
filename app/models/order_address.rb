@@ -6,7 +6,7 @@ class OrderAddress
     validates :post_code, format: { with: /\A[0-9]{3}-[0-9]{4}\z/, message: 'is invalid. Include hyphen(-)' }
     validates :city, format: { with: /\A[ぁ-んァ-ヶ一-龥々ー]+\z/, message: 'は全角文字を使用してください' }
     validates :address
-    validates :phone_number, format: { with: /\A0\d{9,10}\z/, message: 'は半角数字で入力してください' }
+    validates :phone_number, format: { with: /\A\d{10,11}\z/, message: 'は半角数字で入力してください' }
     validates :user_id, :item_id
     validates :token
   end

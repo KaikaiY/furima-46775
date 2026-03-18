@@ -65,6 +65,16 @@ RSpec.describe OrderAddress, type: :model do
         @order_address.valid?
         expect(@order_address.errors.full_messages).to include('Phone number は半角数字で入力してください')
       end
+      it '電話番号が９桁以下だと注文できない' do
+        @order_address.phone_number = Faker::Number.number(digits: 9)
+        @order_address.valid?
+        expect(@order_address.errors.full_messages).to include('Phone number は半角数字で入力してください')
+      end
+      it '電話番号が12桁以上と注文できない' do
+        @order_address.phone_number = Faker::Number.number(digits: 12)
+        @order_address.valid?
+        expect(@order_address.errors.full_messages).to include('Phone number は半角数字で入力してください')
+      end
       it 'userが紐付いていないと注文できない' do
         @order_address.user_id = nil
         @order_address.valid?
@@ -86,7 +96,7 @@ RSpec.describe OrderAddress, type: :model do
     context '保存できる時'
     it '保存できる' do
       user = FactoryBot.create(:user)
-      item = FactoryBot.create(:item, user: user)
+      item = FactoryBot.create(:item, :with_image, user: user)
       order_address = FactoryBot.build(:order_address, user_id: user.id, item_id: item.id)
 
       expect { order_address.save }.to change(Order, :count).by(1).and change(Address, :count).by(1)

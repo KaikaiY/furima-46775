@@ -6,8 +6,14 @@ FactoryBot.define do
     address { 'テスト1-1-1' }
     building_name { 'テストビル' }
     phone_number { '09012345678' }
-    user_id { 2 }
-    item_id { 2 }
     token { 'tok_abcdefghijk00000000000000000' }
+
+    transient do
+      user { build_stubbed(:user) }
+      item { build_stubbed(:item, user: user) }
+    end
+
+    user_id { user.id }
+    item_id { item.id }
   end
 end
